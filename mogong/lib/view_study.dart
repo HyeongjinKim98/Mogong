@@ -14,14 +14,15 @@ class StudyView extends StatelessWidget {
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          title: Container(
-            padding: const EdgeInsets.only(left: 110),
-            child: const Text(
+          title: const Positioned(
+            left: 10,
+            top : 10,
+            child: Text(
               '스터디',
               style: TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16),
             ),
           )),
         body: Container(
@@ -43,19 +44,36 @@ class StudyView extends StatelessWidget {
                         Text('모집인원 ${post.currentmember}/${post.totalmember}'
                           ,style: const TextStyle(
                             fontSize: 11,
-                            color: Colors.blue
+                            color: Color.fromRGBO(84, 41, 255, 1)
                           ),),
                       ],
                     )
                   ],
                 ),
-                const SizedBox(
-                  height : 20
-                ),
+                const SizedBox(height : 20),
                 Text(post.contents,
                 style: const TextStyle(
                   fontSize: 13,
-                ),)
+                  height: 1.8
+                ),),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const[
+                    Text('18분전'
+                              ,style: TextStyle(
+                                fontSize: 11,
+                                color: Color.fromRGBO(84, 41, 255, 1)
+                              ),),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                const Divider(
+                  thickness: 2,
+                  color : Color.fromARGB(255, 212, 206, 206)
+                ),
+                
+                  
             ],
           ),
         ),

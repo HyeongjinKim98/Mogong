@@ -27,11 +27,16 @@ class StudyPage extends StatefulWidget {
 }
 
 class _StudyPageState extends State<StudyPage> {
+  int index = 0;
+  MyAccount account = MyAccount("김형진", "rlagudwls3469@gmail.com", "qwe123");
+  final screens = [
+    const Center(child : Text("home",style: TextStyle(fontSize: 72),)),
+    const Center(child : Text("buy", style: TextStyle(fontSize: 72),)),
+    const StudyPage(),
+    const Center(child : Text("commu", style: TextStyle(fontSize: 72),)),
+  ];
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
-    MyAccount account = MyAccount("김형진", "rlagudwls3469@gmail.com", "qwe123");
-    return Scaffold(
+  Widget build(BuildContext context)=> Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
@@ -125,7 +130,7 @@ class _StudyPageState extends State<StudyPage> {
                                 width: 24,
                                 height: 24,
                               ),
-                              Text(
+                              const Text(
                                 "찜목록",
                                 style: TextStyle(fontSize: 10),
                               ),
@@ -141,7 +146,7 @@ class _StudyPageState extends State<StudyPage> {
                           width: 24,
                           height: 24,
                         ),
-                        Text("공감", style: TextStyle(fontSize: 10)),
+                        const Text("공감", style: TextStyle(fontSize: 10)),
                       ],
                     ),
                   ],
@@ -151,113 +156,91 @@ class _StudyPageState extends State<StudyPage> {
           ],
         ),
       )),
-      body: Container(
-          padding: EdgeInsets.only(top: 10),
-          color: Color.fromARGB(255, 239, 239, 239),
-          child: ListView.builder(
-              itemCount: posts.length,
-              itemBuilder: (context, i) => SizedBox(
-                    height: 140,
-                    child: Card(
-                        shadowColor: Colors.transparent,
-                        elevation: 6,
-                        margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: ListTile(
-                          onTap: () async{
-                            final post = posts[i];
-                            final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context)=>new StudyView(post: post)
-                              )
-                            );
-                          },
-                          // (() {
-                          //   print(posts[i].title);
-                          //   Navigator.push(
-                          //       context,
-                          //          MaterialPageRoute(
-                          //           builder: (context) => new StudyView())
-                          //   );
-                          // }),
-                          title: Padding(
-                            padding: const EdgeInsets.fromLTRB(11, 15, 0, 0),
-                            child: Text(
-                              posts[i].title,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.fromLTRB(11, 53, 0, 0),
-                            child: Text(posts[i].contents),
-                          ),
-                          trailing: Text(
-                            '모집인원 ${posts[i].currentmember}/${posts[i].totalmember}',
-                            style: const TextStyle(
-                              fontSize: 10,),                          
-                          ),
-                        )),
-                  ))),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Image.asset('assets/home_icon.png', height: 22, width: 22),
-              label: '홈'),
-          BottomNavigationBarItem(
-              icon: Image.asset('assets/perchase_icon.png', height: 22, width: 22),
-              label: '공동구매',
-              ),
-          BottomNavigationBarItem(
-              icon: Image.asset('assets/study_icon.png', height: 22, width: 22),
-              label: '스터디'),
-          BottomNavigationBarItem(
-              icon: Image.asset('assets/community_icon.png', height: 22, width: 22),
-              label: '커뮤니티'),
-        ],
+      body: screens[index]
+      // Container(
+      //     padding: const EdgeInsets.only(top: 10),
+      //     color: const Color.fromARGB(255, 239, 239, 239),
+      //     child: ListView.builder(
+      //         itemCount: posts.length,
+      //         itemBuilder: (context, i) => SizedBox(
+      //               height: 140,
+      //               child: Card(
+      //                   shadowColor: Colors.transparent,
+      //                   elevation: 6,
+      //                   margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+      //                   child: ListTile(
+      //                     onTap: () async{
+      //                       final post = posts[i];
+      //                       final result = await Navigator.push(
+      //                         context,
+      //                         MaterialPageRoute(
+      //                           builder: (context)=>StudyView(post: post)
+      //                         )
+      //                       );
+      //                     },
+      //                     title: Padding(
+      //                       padding: const EdgeInsets.fromLTRB(11, 15, 0, 0),
+      //                       child: Text(
+      //                         posts[i].title,
+      //                         style:
+      //                             const TextStyle(fontWeight: FontWeight.w800),
+      //                       ),
+      //                     ),
+      //                     subtitle: Padding(
+      //                       padding: const EdgeInsets.fromLTRB(11, 53, 0, 0),
+      //                       child: Text(
+      //                         posts[i].contents,
+      //                         maxLines: 1,
+      //                         overflow: TextOverflow.ellipsis,
+      //                         ),
+      //                     ),
+      //                     trailing: Text(
+      //                       '모집인원 ${posts[i].currentmember}/${posts[i].totalmember}',
+      //                       style: const TextStyle(
+      //                         fontSize: 10,),                          
+      //                     ),
+      //                   )),
+      //             ))),
+      ,
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          indicatorColor:Colors.blue.shade100,
+          labelTextStyle: MaterialStateProperty.all(
+            const TextStyle(fontSize: 10, fontWeight: FontWeight.w500)
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top:5),
+          child: NavigationBar(
+            selectedIndex: index,
+            onDestinationSelected: (index)=>setState(() => this.index = index),
+            backgroundColor: Colors.white,
+            height: 70,
+            destinations: [
+              NavigationDestination(
+                icon: Image.asset('assets/home_icon.png', height: 22, width: 22),
+                label: '홈'),
+              NavigationDestination(
+                icon: Image.asset('assets/perchase_icon.png', height: 22, width: 22),
+                label: '공동구매'),
+              NavigationDestination(
+                icon: Image.asset('assets/study_icon.png', height: 22, width: 22),
+                label: '스터디'),
+              NavigationDestination(
+                icon: Image.asset('assets/community_icon.png', height: 22, width: 22),
+                label: '커뮤니티'),
+            ]),
+        ),
       ),
-      // Padding(
-      //   padding: const EdgeInsets.all(4.0),
-      //   child: NavigationBar(
-      //     height: 60,
-      //     backgroundColor: Colors.white,
-      //     destinations: [
-      //       NavigationDestination(
-      //           icon: Image.asset('assets/home_icon.png',
-      //               height: 22, width: 22),
-      //           label: '홈'),
-      //       NavigationDestination(
-      //           icon: Image.asset(
-      //             'assets/perchase_icon.png',
-      //             height: 22,
-      //             width: 22,
-      //           ),
-      //           label: '공동구매'),
-      //       NavigationDestination(
-
-      //           icon: Image.asset('assets/study_icon.png',
-      //               height: 22, width: 22),
-      //           label: '스터디'),
-      //       NavigationDestination(
-      //         icon: Image.asset('assets/community_icon.png',
-      //             height: 22, width: 22),
-      //         label: '커뮤니티',
-      //       ),
-      //     ],
-      //   ),
-      // ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Color.fromRGBO(84, 41, 255, 1),
           onPressed: () {
             Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new PostPage()));
+                MaterialPageRoute(builder: (context) => const PostPage()));
           },
           child: Image.asset('assets/pencil.png', width: 24, height: 24)),
     );
   }
-}
+
 
 
