@@ -60,7 +60,7 @@ class _StudyPageState extends State<StudyPage> {
                     child: const TextField(
                         style: TextStyle(color: Colors.white, fontSize: 11),
                         decoration: InputDecoration(
-                            hintText: '검색어를 입력하세요',
+                            hintText: 'commit test검색어를 입력하세요',
                             border: InputBorder.none,
                             hintStyle: TextStyle(color: Colors.white))),
                   ))
