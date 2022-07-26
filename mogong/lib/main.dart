@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'post_study.dart';
-import 'view_study.dart';
 import 'info.dart';
+import 'main_study.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class _StudyPageState extends State<StudyPage> {
   final screens = [
     const Center(child : Text("home",style: TextStyle(fontSize: 72),)),
     const Center(child : Text("buy", style: TextStyle(fontSize: 72),)),
-    const StudyPage(),
+    const StudyMain(),
     const Center(child : Text("commu", style: TextStyle(fontSize: 72),)),
   ];
   @override
@@ -156,52 +156,7 @@ class _StudyPageState extends State<StudyPage> {
           ],
         ),
       )),
-      body: screens[index]
-      // Container(
-      //     padding: const EdgeInsets.only(top: 10),
-      //     color: const Color.fromARGB(255, 239, 239, 239),
-      //     child: ListView.builder(
-      //         itemCount: posts.length,
-      //         itemBuilder: (context, i) => SizedBox(
-      //               height: 140,
-      //               child: Card(
-      //                   shadowColor: Colors.transparent,
-      //                   elevation: 6,
-      //                   margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-      //                   child: ListTile(
-      //                     onTap: () async{
-      //                       final post = posts[i];
-      //                       final result = await Navigator.push(
-      //                         context,
-      //                         MaterialPageRoute(
-      //                           builder: (context)=>StudyView(post: post)
-      //                         )
-      //                       );
-      //                     },
-      //                     title: Padding(
-      //                       padding: const EdgeInsets.fromLTRB(11, 15, 0, 0),
-      //                       child: Text(
-      //                         posts[i].title,
-      //                         style:
-      //                             const TextStyle(fontWeight: FontWeight.w800),
-      //                       ),
-      //                     ),
-      //                     subtitle: Padding(
-      //                       padding: const EdgeInsets.fromLTRB(11, 53, 0, 0),
-      //                       child: Text(
-      //                         posts[i].contents,
-      //                         maxLines: 1,
-      //                         overflow: TextOverflow.ellipsis,
-      //                         ),
-      //                     ),
-      //                     trailing: Text(
-      //                       '모집인원 ${posts[i].currentmember}/${posts[i].totalmember}',
-      //                       style: const TextStyle(
-      //                         fontSize: 10,),                          
-      //                     ),
-      //                   )),
-      //             ))),
-      ,
+      body: screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor:Colors.blue.shade100,
@@ -213,7 +168,9 @@ class _StudyPageState extends State<StudyPage> {
           padding: const EdgeInsets.only(top:5),
           child: NavigationBar(
             selectedIndex: index,
-            onDestinationSelected: (index)=>setState(() => this.index = index),
+            onDestinationSelected:
+              (index)=>setState(
+                () => this.index = index),
             backgroundColor: Colors.white,
             height: 70,
             destinations: [
@@ -232,13 +189,16 @@ class _StudyPageState extends State<StudyPage> {
             ]),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Color.fromRGBO(84, 41, 255, 1),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const PostPage()));
-          },
-          child: Image.asset('assets/pencil.png', width: 24, height: 24)),
+      floatingActionButton: Visibility(
+        visible:false,
+        child: FloatingActionButton(
+            backgroundColor: const Color.fromRGBO(84, 41, 255, 1),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const PostPage()));
+            },
+            child: Image.asset('assets/pencil.png', width: 24, height: 24)),
+      ),
     );
   }
 
